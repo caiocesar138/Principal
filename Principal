@@ -25,7 +25,10 @@ public class Principal {
 		while (!opcao.equals("6")) {
 			opcao = entradaDeDadosTexto("Menu de opções\n\n"+
 										"1 - Cadastrar \n" +
-										"2- Consultar \n" +
+										"2 - Consultar \n" +
+										"3 - AtualizarEmailAlun\n" +
+										"4 - ExcluirAlun\n"+
+										"5 - ListarAlun\n" +
 										"6 - Sair \n\n"
 										);
 		
@@ -34,6 +37,12 @@ public class Principal {
 				case "1": cadastrarAlun();
 				break;
 				case "2": consultarAlun();
+				break;
+				case "3": atualizarEmailAlun();
+				break;
+				case "4": excluirAlun();
+				break;
+				case "5": listarAlun();
 				break;
 				case "6": sair();
 				break;
@@ -50,9 +59,13 @@ public class Principal {
 	
 
 
+
 	private static void cadastrarAlun() {
 		if (!cheio()) {
 			nome[fundo] = entradaDeDadosTexto("\nDigite o nome do aluno: ");
+			
+			if (nome[fundo]!=null && !(nome[fundo].isEmpty())) {
+				
 			email[fundo] = entradaDeDadosTexto("\nDigite o email: ");
 			cidade[fundo] = entradaDeDadosTexto("\nDigite a cidade: ");
 			uf[fundo] = entradaDeDadosTexto("\nDigite a UF: ");
@@ -62,56 +75,17 @@ public class Principal {
 			fundo++;
 			quantos++;
 			
+			} else {
+				mensagemSaida("Digite um nome para o aluno.");
+			}
+			
+			
 		} else {
-			mensagemSaida("\nNão há espaço para cadastrar outro aluno.");
+			mensagemSaida("\nNão há espaço para cadastro.");
 		}
 		
 	}
 	
-
-/*
-	private static void consultarAlun() {
-		String alternativa = "";
-	
-		if(!vazio()) {
-			
-		alternativa = entradaDeDadosTexto("Digite a o código do aluno que quer buscar: ");
-		int k=0;
-		boolean teste=false;
-		
-		while (teste=false) {
-			
-		
-			if (codigo[k]==alternativa) {
-				mensagemSaida("Encontramos o aluno:\n" +
-								"Nome:" + nome[k] +
-								"Email:" + email[k] +
-								"Cidade:" + cidade[k] +
-								"UF:" + uf[k]
-								);
-			teste=true;
-			
-			} 
-			
-			else {
-				k++;
-				
-			}
-			
-			
-		
-			
-		}
-		
-			} else {
-			mensagemSaida("Cadastro vazio.");
-			}
-			
-		
-			
-
-}
-*/
 
 
 	private static void consultarAlun() {
@@ -120,31 +94,31 @@ public class Principal {
 		if(!vazio()) {
 			
 		alternativa = Integer.parseInt(
-				entradaDeDadosTexto("Digite a o código do aluno que quer buscar: ")
+				entradaDeDadosTexto("Digite o código do aluno que quer buscar: ")
 				);
 
 		try {
 			
-				if (nome[alternativa]!=null) {
+				if (nome[alternativa]!=null && !(nome[fundo].isEmpty())) {
 					
 				
 					mensagemSaida("Encontramos o aluno:\n" +
-									"\nNome:" + nome[alternativa] +
-									"\nEmail:" + email[alternativa] +
-									"\nCidade:" + cidade[alternativa] +
-									"\nUF:" + uf[alternativa]
+									"\nNome: " + nome[alternativa] +
+									"\nEmail: " + email[alternativa] +
+									"\nCidade: " + cidade[alternativa] +
+									"\nUF: " + uf[alternativa]
 								);
 				} 
 				
 				else {
-					mensagemSaida("Código não foi cadastrado");
+					mensagemSaida("Código não cadastrado");
 				}
 				
 			
 			
 			
 		} catch (Exception ex) {
-			mensagemSaida("Código não foi encontrado");
+			mensagemSaida("Código não encontrado");
 			
 		}
 		
@@ -155,7 +129,137 @@ public class Principal {
 			}
 				
 
-}
+	}
+
+	
+	public static void atualizarEmailAlun() {
+		int alternativa = 0;
+		String novoEmail;
+		
+		if(!vazio()) {
+			
+		alternativa = Integer.parseInt(
+				entradaDeDadosTexto("Digite o código do aluno que deseja atualizar o email: ")
+				);
+
+		try {
+			
+				if (nome[alternativa]!=null && !(nome[fundo].isEmpty())) {
+					
+				
+					mensagemSaida("Encontramos o aluno " + nome[alternativa] +
+									" com o email " + email[alternativa]
+								);
+					novoEmail = entradaDeDadosTexto("Digite o novo email deste aluno: ");
+					
+					if (novoEmail!=null) {
+						
+						email[alternativa] = novoEmail;
+						mensagemSaida("Email atualizado!");
+						
+					} else {
+						
+						mensagemSaida("Digite um novo email válido");
+						
+					}
+					
+					
+					
+				} 
+				
+				else {
+					mensagemSaida("Código não cadastrado");
+				}
+				
+			
+			
+			
+		} catch (Exception ex) {
+			mensagemSaida("Código não encontrado");
+			
+		}
+		
+			} 
+		
+			else {
+			mensagemSaida("Cadastro vazio.");
+			}
+		
+		
+		
+	}
+	
+	
+	public static void excluirAlun() {
+		int alternativa = 0;
+		
+		if(!vazio()) {
+			
+		alternativa = Integer.parseInt(
+				entradaDeDadosTexto("Digite o código do aluno que deseja excluir: ")
+				);
+
+		try {
+			
+				if (nome[alternativa]!=null && !(nome[fundo].isEmpty())) {
+					
+				
+					mensagemSaida("Excluímos o aluno:\n" +
+									"\nNome: " + nome[alternativa] +
+									"\nEmail: " + email[alternativa] +
+									"\nCidade: " + cidade[alternativa] +
+									"\nUF: " + uf[alternativa]
+								);
+					
+					nome[alternativa] = null;
+					email[alternativa] = null;
+					cidade[alternativa] = null;
+					uf[alternativa] = null;
+					
+					quantos--;
+				} 
+				
+				else {
+					mensagemSaida("Código não cadastrado");
+				}
+				
+			
+			
+			
+		} catch (Exception ex) {
+			mensagemSaida("Código não encontrado");
+			
+		}
+		
+			} 
+		
+			else {
+			mensagemSaida("Cadastro vazio.");
+			}
+		
+		
+	}
+	
+	
+	public static void listarAlun() {
+		
+		if (!vazio()) {
+			for (int i=0;i<fundo;i++) {
+				
+				mensagemSaida("\nCódigo: " + codigo[i] + " - Nome: " + nome[i] + "\n");
+		
+			}
+			
+		
+		} else {
+			
+			mensagemSaida("Cadastro vazio.");
+			
+		}
+	
+	}
+	
+	
 	
 	
 	
@@ -179,11 +283,13 @@ public class Principal {
 		return JOptionPane.showInputDialog(texto);
 		
 	}
-	
+
 	private static void sair() {
 		return ;
 	}
 	
 
-}
+}													
+
+
 									
